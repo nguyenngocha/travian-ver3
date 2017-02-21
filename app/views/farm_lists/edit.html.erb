@@ -1,0 +1,48 @@
+<h1>FarmLists#edit</h1>
+
+<div class="container">
+    <%= form_for [@account, @farm_list] do |f| %>
+      <div>
+        <%= f.label :name%>
+        <%= f.text_field  :name, class: "form-control farm-list-input" %>
+        <%= f.label :village %>
+        <%= f.object.village_name %>
+        <%= f.label :status %>
+        <%= f.check_box :status %>
+      </div>
+      <%= link_to new_account_farm_list_farm_path(@account, @farm_list) do %>
+        <div class="btn btn-success">
+          <i class="glyphicon glyphicon-plus-sign"></i>
+          Add Farm
+        </div>
+      <% end %>
+      <div class="farm-table">
+        <table class="table table-striped table-farm-list">
+          <thead>
+            <tr>
+              <th>Toa Do</th>
+              <th><div class="image-<%= @account.race %> army1" ></div></th>
+              <th><div class="image-<%= @account.race %> army2" ></div></th>
+              <th><div class="image-<%= @account.race %> army3" ></div></th>
+              <th><div class="image-<%= @account.race %> army4" ></div></th>
+              <th><div class="image-<%= @account.race %> army5" ></div></th>
+              <th><div class="image-<%= @account.race %> army6" ></div></th>
+              <th><div class="image-<%= @account.race %> army7" ></div></th>
+              <th><div class="image-<%= @account.race %> army8" ></div></th>
+              <th><div class="image-<%= @account.race %> army9" ></div></th>
+              <th><div class="image-<%= @account.race %> army10" ></div></th>
+              <th><div class="image-hero" ></div></th>
+              <th>Active</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <%= render "farm_form", f: f %>
+          </tbody>
+        </table>
+      </div>
+    <%= link_to "Back", account_farm_lists_path(@account), class: "btn btn-danger"%>
+    <%= f.submit "Save", class: "btn btn-success" %>
+  <% end %>
+</div>

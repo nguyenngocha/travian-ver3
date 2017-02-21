@@ -1,0 +1,46 @@
+<h1>Account Lists</h1>
+
+<div class="container">
+    <table>
+      <thead>
+        <tr class="row">
+          <td class="col-md-3"><label>Username</label></td>
+          <td class="col-md-3"><label>Password</label></td>
+          <td class="col-md-3"><label>Server</label></td>
+          <td class="col-md-3"></td>
+        </tr>
+      </thead>
+      <tbody>
+        <%= form_for :account, url: accounts_path, method: :post do |f| %>
+          <tr class="row">
+            <td class="col-md-3">
+              <%= f.text_field :username, class: "form-control" %>
+            </td>
+            <td class="col-md-3">
+              <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+            </td>
+            <td class="col-md-3">
+              <%= f.select :server_id, @servers.collect {|k| [k.id, k.id]}, class: "form-control" %>
+            </td>
+            <td class="col-md-3">
+              <%= f.submit "Add", class:"btn btn-success" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <table>
+      <thead>
+        <tr class="row">
+          <td class="col-md-3"><label>Username</label></td>
+          <td class="col-md-3"><label>Race</label></td>
+          <td class="col-md-3"><label>Server</label></td>
+          <td class="col-md-2"></td>
+          <td class="col-md-1"></td>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @accounts %>
+      </tbody>
+    </table>
+</div>

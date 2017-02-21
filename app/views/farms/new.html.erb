@@ -1,0 +1,45 @@
+<h1>Farm#new</h1>
+<div class="container">
+  <%= form_for [@account, @farm_list, @farm] do |farm| %>
+    <%= render "shared/error_messages", object: @farm %>
+    <dir class="farm-table">
+      <table>
+        <thead>
+          <tr>
+            <th class="latlong">Toa do</th>
+            <th><div class="image-<%= @account.race %> army1" ></div></th>
+            <th><div class="image-<%= @account.race %> army2" ></div></th>
+            <th><div class="image-<%= @account.race %> army3" ></div></th>
+            <th><div class="image-<%= @account.race %> army4" ></div></th>
+            <th><div class="image-<%= @account.race %> army5" ></div></th>
+            <th><div class="image-<%= @account.race %> army6" ></div></th>
+            <th><div class="image-<%= @account.race %> army7" ></div></th>
+            <th><div class="image-<%= @account.race %> army8" ></div></th>
+            <th><div class="image-<%= @account.race %> army9" ></div></th>
+            <th><div class="image-<%= @account.race %> army10" ></div></th>
+            <th><div class="image-hero" ></div></th>
+          </tr>
+        </thead>
+        <body>
+          <tr>
+            <td><%= farm.number_field :x, placeholder: "X", class: "input" %></td>
+            <td><%= farm.number_field :y, placeholder: "Y", class: "input" %></td>
+            <td><%= farm.number_field :army1, class: "input" %></td>
+            <td><%= farm.number_field :army2, class: "input" %></td>
+            <td><%= farm.number_field :army3, class: "input" %></td>
+            <td><%= farm.number_field :army4, class: "input" %></td>
+            <td><%= farm.number_field :army5, class: "input" %></td>
+            <td><%= farm.number_field :army6, class: "input" %></td>
+            <td><%= farm.number_field :army7, class: "input" %></td>
+            <td><%= farm.number_field :army8, class: "input" %></td>
+            <td><%= farm.number_field :army9, class: "input" %></td>
+            <td><%= farm.number_field :army10, class: "input" %></td>
+            <td><%= farm.number_field :army11, class: "input" %></td>
+          </tr>
+        </body>
+      </table>
+      <%= link_to "Back", edit_account_farm_list_path(@account, @farm_list), class: "btn btn-danger" %>
+      <%= farm.submit "Create", class: "btn btn-success"%>
+    </div>
+  <% end %>
+</div>

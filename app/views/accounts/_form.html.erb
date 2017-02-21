@@ -1,0 +1,5 @@
+<%= form_for @account do |f| %>
+  <td class="col-md-3"><%= f.text_field :username, class: "form_controller" %></td>
+  <td class="col-md-3"><%= f.password_field :password, placeholder: "password", class: "form_controller" %></td>
+  <td class="col-md-2"><%= f.submit "Update", class: "btn btn-success" %></td>
+<% end %>

@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  username: MyString
+  password: MyString
+  t3e: MyString
+  race: MyString
+  sess_id: MyString
+  proxy: MyString
+  port: 1
+  ajax_token: MyString
+  player_uuid: MyString
+  active: 1
+  server_id: 1
+
+two:
+  username: MyString
+  password: MyString
+  t3e: MyString
+  race: MyString
+  sess_id: MyString
+  proxy: MyString
+  port: 1
+  ajax_token: MyString
+  player_uuid: MyString
+  active: 1
+  server_id: 1

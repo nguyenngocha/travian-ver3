@@ -1,0 +1,20 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container" style="padding-top: 10px">
+  <%= link_to "Map", "#", class: "btn btn-primary" %>
+  <%= link_to "Proxy", new_proxy_path, class: "btn btn-primary" %>
+  <%= link_to "Check proxy", "#", class: "btn btn-primary" %>
+  <% if user_signed_in? %>
+    <%= link_to "Account", accounts_path, class: "btn btn-primary" %>
+  <% end %>
+    <nav style="display: inline-block; float: right;">
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+        <% else %>
+          <%= link_to "Login", new_user_session_path, class: "btn btn-primary" %>
+          <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary" %>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+</header>

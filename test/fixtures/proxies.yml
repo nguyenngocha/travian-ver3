@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: MyString
+  port: 1
+  status: false
+  used: false
+
+two:
+  id: MyString
+  port: 1
+  status: false
+  used: false

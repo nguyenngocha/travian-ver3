@@ -1,0 +1,190 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+h1, h2, h3, h4, h5 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  text-align: center;
+}
+
+body {
+  padding-top: 60px;
+}
+
+.container{
+  width:90%;
+  margin:auto;
+}
+
+table {
+  width: 100%;
+}
+
+.farm-table {
+  .table {
+    width: 100%;
+    height: 400px;
+  }
+
+  thead, tbody, tr, td, th { display: block; }
+
+  tr:after {
+    content: ' ';
+    display: block;
+    clear: both;
+  }
+
+  thead tr th {
+    height: 40px;
+    width: 69px;
+    text-align: center;
+    &.latlong {
+      width: 138px;
+    }
+  }
+
+  tbody {
+    height: 80%;
+    overflow-y: auto;
+  }
+
+  tbody tr td, thead th {
+    width: 69px;
+    float: left;
+    text-align: center;
+  }
+  .input {
+    width: 100%;
+  }
+  .input2 {
+    width: 126%;
+  }
+}
+
+.farm-table2 {
+  .table {
+    width: 100%;
+    height: 370px;
+  }
+
+  thead, tbody, tr, td, th { display: block; }
+
+  tr:after {
+    content: ' ';
+    display: block;
+    clear: both;
+  }
+
+  thead tr th {
+    height: 40px;
+    width: 16%;
+    text-align: center;
+  }
+
+  tbody {
+    height: 80%;
+    overflow-y: auto;
+    td:nth-child(6), td:nth-child(5)  {
+      width: 40px;
+    }
+  }
+
+  tbody tr td, thead th {
+    width: 16%;
+    float: left;
+    text-align: center;
+    .buttom-delete {
+
+    }
+  }
+}
+
+.image-hero {
+  width: 16px;
+  height: 16px;
+  margin-left: 45%;
+  background-image: url("specials.gif");
+  background-position: -38px 0;
+}
+.image-gauls {
+  width: 16px;
+  height: 16px;
+  margin-left: 45%;
+  background-image: url("gauls.gif");
+}
+.image-teutons {
+  width: 16px;
+  height: 16px;
+  margin-left: 45%;
+  background-image: url("teutons.gif");
+}
+.image-romans {
+  width: 16px;
+  height: 16px;
+  margin-left: 45%;
+  background-image: url("romans.gif");
+}
+.army1 {
+  background-position: 0px 0;
+}
+.army2 {
+  background-position: -19px 0;
+}
+.army3 {
+  background-position: -38px 0;
+}
+.army4 {
+  background-position: -57px 0;
+}
+.army5 {
+  background-position: -76px 0;
+}
+.army6 {
+  background-position: -95px 0;
+}
+.army7 {
+  background-position: -114px 0;
+}
+.army8 {
+  background-position: -133px 0;
+}
+.army9 {
+  background-position: -152px 0;
+}
+.army10 {
+  background-position: -171px 0;
+}
+
+.farm-list-input {
+  display: inline-block;
+  width: 31%;
+}
+
+.farm-list-new {
+  margin-left: 30%;
+}
+
+.farm-list-select {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#flash {
+  position: absolute;
+  margin-top: 40px;
+  top: 40px;
+  right: 7%;
+  z-index: 100;
+  width: 30%;
+  word-wrap: break-word;
+  float: right !important;
+  text-align: right;
+
+  .nht-flash {
+    display: inline-block;
+  }
+}

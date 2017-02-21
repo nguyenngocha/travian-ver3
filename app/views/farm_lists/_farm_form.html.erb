@@ -1,0 +1,29 @@
+<%= f.fields_for :farms do |ff| %>
+  <tr>
+    <td>
+      <a href="http://<%= @account.server_id %>/position_details.php?x=<%=
+        ff.object.x %>&y=<%= ff.object.y %>">
+        (<%= ff.object.x %>|<%= ff.object.y %>)
+      </a>
+    </td>
+    <td><%= ff.number_field :army1, class: "input2" %></td>
+    <td><%= ff.number_field :army2, class: "input2" %></td>
+    <td><%= ff.number_field :army3, class: "input2" %></td>
+    <td><%= ff.number_field :army4, class: "input2" %></td>
+    <td><%= ff.number_field :army5, class: "input2" %></td>
+    <td><%= ff.number_field :army6, class: "input2" %></td>
+    <td><%= ff.number_field :army7, class: "input2" %></td>
+    <td><%= ff.number_field :army8, class: "input2" %></td>
+    <td><%= ff.number_field :army9, class: "input2" %></td>
+    <td><%= ff.number_field :army10, class: "input2" %></td>
+    <td><%= ff.number_field :army11, class: "input2" %></td>
+    <td><%= ff.check_box :status %></td>
+    <td>
+      <%= link_to account_farm_list_farm_path(@account, @farm_list, ff.object), method: :delete do %>
+        <div>
+          <i class="glyphicon glyphicon-trash"></i>
+        </div>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
