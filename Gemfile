@@ -21,6 +21,7 @@ gem "http"
 gem "nokogiri"
 gem "bootstrap-sass", "3.3.6"
 gem "devise"
+gem "whenever"
 
 group :development, :test do
   gem "byebug", platform: :mri
