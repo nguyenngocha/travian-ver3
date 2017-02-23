@@ -6,4 +6,7 @@ class Village
   field :name, type: String
   validates_uniqueness_of :_id
   embedded_in :account, inverse_of: :villages
+  embeds_many :upgrate_schedules
+
+  accepts_nested_attributes_for :upgrate_schedules, allow_destroy: true
 end

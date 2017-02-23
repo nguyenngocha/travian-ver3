@@ -1,0 +1,12 @@
+<td>
+  <% village.upgrate_schedules.each do |us| %>
+    <li>
+      <%= us.upgrate_id if us %>
+      <%= link_to [@account, village, us], method: :delete,
+        data: {confirm: "bạn có thực sự muốn xóa ID này ra khỏi danh sách hàng chờ upgrate ?"} do %>
+        <span class="glyphicon glyphicon-remove-sign" style="color: red;"></span>
+      <% end %>
+    </li>
+  <% end %>
+  <li><%= link_to "add", new_account_village_upgrate_schedule_path(@account,village) %></li>
+</td>

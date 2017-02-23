@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  village_id: 1
+  upgrate_id: 1
+  upgrate_name: MyString
+  upgrate_time: 2017-02-21
+
+two:
+  village_id: 1
+  upgrate_id: 1
+  upgrate_name: MyString
+  upgrate_time: 2017-02-21

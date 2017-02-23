@@ -17,6 +17,9 @@ Rails.application.routes.draw do
     resources :farm_lists do
       resources :farms
     end
+    resources :villages do
+      resources :upgrate_schedules
+    end
   end
   namespace :admin do
     root "accounts#index"

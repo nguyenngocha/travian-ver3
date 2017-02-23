@@ -2,7 +2,7 @@ namespace :job do
   desc "Farm"
   task farm: [:environment] do
     # @users = User.all
-    User.all.each do |user|
+    User.each do |user|
       # accounts = user.accounts
       user.accounts.each do |account|
         account.farm_lists.each do |farm_list|

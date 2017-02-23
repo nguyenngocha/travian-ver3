@@ -1,0 +1,14 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <% @villages.each do |vl| %>
+        <td><%= vl.name %></td>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <%= render @villages %>
+    </tr>
+  </tbody>
+</table>

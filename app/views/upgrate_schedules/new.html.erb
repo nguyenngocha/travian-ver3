@@ -1,0 +1,7 @@
+<%= form_for [@account, @village, @upgrate_building] do |f| %>
+  <%= f.label :upgrate_id,
+    "nhập ID công trình mà bạn muốn thêm vào lịch nâng cấp trong làng #{@village.name}:" %><br/>
+  <%= f.number_field :upgrate_id, in: 1..40 %>
+  <%= f.hidden_field :village_id, value: @village.id %>
+  <%= f.submit "Add", class: "btn btn-success" %>
+<% end %>
