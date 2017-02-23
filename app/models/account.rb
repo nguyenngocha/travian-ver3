@@ -12,4 +12,6 @@ class Account
   embedded_in :user, inverse_of: :accounts
   embeds_many :villages
   embeds_many :farm_lists
+
+  accepts_nested_attributes_for :villages, allow_destroy: true
 end
