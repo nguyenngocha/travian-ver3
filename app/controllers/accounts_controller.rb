@@ -1,14 +1,14 @@
 class AccountsController < ApplicationController
-  # before_action :check_valid_proxy
-  before_action :check_valid_proxy, :check_correct_account, only: :create
+  before_action :check_valid_proxy, :check_correct_account, only: [:create]
   before_action :find_account, only: [:show, :edit, :update, :destroy]
+
   def index
     @servers = Server.all
     @accounts = current_user.accounts
   end
 
   def show
-    res = Request::LoginService.new(ip: current_user.ip, port: current_user.port,
+    res = Request::LoginService.new(current_user: current_user,
       server: @account.server_id, name: @account.username,
       password: @account.password).perform
     page = Nokogiri::HTML res.body.to_s
@@ -55,7 +55,7 @@ class AccountsController < ApplicationController
   end
 
   def check_correct_account
-    res = Request::LoginService.new(ip: current_user.ip, port: current_user.port,
+    res = Request::LoginService.new(current_user: current_user,
       server: params[:account][:server_id], name: params[:account][:username],
       password: params[:account][:password]).perform
     page = Nokogiri::HTML res.body.to_s

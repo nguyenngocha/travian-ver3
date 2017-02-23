@@ -6,6 +6,7 @@ class Check::GetActiveProxyService
   end
 
   def perform?
+    return true if @current_user.is_admin?
     if @current_user.ip.present?
       if check_proxy? @current_user.ip, @current_user.port
         return true

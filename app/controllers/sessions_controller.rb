@@ -1,6 +1,6 @@
 class SessionsController < Devise::SessionsController
-  after_action :check_proxy, only: [:create]
-
+  # after_action :check_proxy, only: [:create]
+  skip_before_filter :authenticate_user!
   def new
     super
   end
@@ -11,9 +11,6 @@ class SessionsController < Devise::SessionsController
     sign_in(resource_name, resource)
     yield resource if block_given?
     respond_with resource, location: after_sign_in_path_for(resource)
-    # unless  Check::GetActiveProxyService.new(current_user: current_user).perform?
-    #   redirect_to error_path
-    # end
   end
 
   def destroy
@@ -24,9 +21,9 @@ class SessionsController < Devise::SessionsController
   end
 
   private
-  def check_proxy
-    unless  Check::GetActiveProxyService.new(current_user: current_user).perform?
-      redirect_to error_path
-    end
-  end
+  # def check_proxy
+  #   unless  Check::GetActiveProxyService.new(current_user: current_user).perform?
+  #     redirect_to error_path
+  #   end
+  # end
 end

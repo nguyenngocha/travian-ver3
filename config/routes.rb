@@ -7,11 +7,19 @@ Rails.application.routes.draw do
     registrations: "registrations"
   }
 
+  require 'sidekiq/web'
+  authenticate :user, lambda { |u| u.is_admin? } do
+    mount Sidekiq::Web, at: '/sidekiq'
+  end
+
   resources :users
   resources :accounts do
     resources :farm_lists do
       resources :farms
     end
   end
-  resources :proxies
+  namespace :admin do
+    root "accounts#index"
+    resources :proxies
+  end
 end
