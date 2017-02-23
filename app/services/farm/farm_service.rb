@@ -25,9 +25,13 @@ class Farm::FarmService
   def login
     current_time = Time.now.to_i
     url = "http://#{@account.server_id}/dorf1.php"
-
-    res = HTTP.via(@user.ip, @user.port).post url, form: {name: @account.username,
-      password: @account.password, login: current_time}
+    if @user.is_admin?
+      res = HTTP.post url, form: {name: @account.username,
+        password: @account.password, login: current_time}
+    else
+      res = HTTP.via(@user.ip, @user.port).post url, form: {name: @account.username,
+        password: @account.password, login: current_time}
+    end
     @page = Nokogiri::HTML res.body.to_s
     if @page.css("div#header ul#navigation").empty?
       puts "Dang nhap lai va loi"
@@ -97,7 +101,11 @@ class Farm::FarmService
     @cookies[:lowRes] = 0
     @cookies[:sess_id] = @account.sess_id
     @troop_info = Hash.new
-    res = HTTP.via(@user.ip, @user.port).cookies(@cookies).get url
+    if @user.is_admin?
+      res = HTTP.cookies(@cookies).get url
+    else
+      res = HTTP.via(@user.ip, @user.port).cookies(@cookies).get url
+    end
     @page = Nokogiri::HTML res.body.to_s
     if @page.css("div#header ul#navigation").empty?
       return false unless login()
@@ -150,7 +158,11 @@ class Farm::FarmService
         form[:t10] = farm.army10
         form[:t11] = farm.army11
 
-        res = HTTP.via(@user.ip, @user.port).cookies(@cookies).post url, form: form
+        if @user.is_admin?
+          res = HTTP.cookies(@cookies).post url, form: form
+        else
+          res = HTTP.via(@user.ip, @user.port).cookies(@cookies).post url, form: form
+        end
         page = Nokogiri::HTML res.body.to_s
         unless page.css("input[name='a'] @value").text.blank?
 
@@ -185,7 +197,11 @@ class Farm::FarmService
   def send_request2
     url = "http://#{@account.server_id}/build.php?id=39&gid=16&tt=2"
     @respond_params.each do |param|
-      HTTP.via(@user.ip, @user.port).cookies(@cookies).post url, form: param
+      if @user.is_admin?
+        HTTP.cookies(@cookies).post url, form: param
+      else
+        HTTP.via(@user.ip, @user.port).cookies(@cookies).post url, form: param
+      end
     end
     Time.zone = "Hanoi"
     puts "#{Time.zone.now}: Gui #{@respond_params.size} dot"

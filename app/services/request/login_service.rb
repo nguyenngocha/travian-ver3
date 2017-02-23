@@ -2,8 +2,7 @@ class Request::LoginService
   attr_reader :args
 
   def initialize args
-    @ip = args[:ip]
-    @port = args[:port]
+    @current_user = args[:current_user]
     @server = args[:server]
     @name = args[:name]
     @password = args[:password]
@@ -15,6 +14,10 @@ class Request::LoginService
     p[:name] = @name
     p[:password] = @password
     p[:login] = Time.now.to_i
-    HTTP.via(@ip, @port).post url, form: p
+    if @current_user.is_admin?
+      HTTP.post url, form: p
+    else
+      HTTP.via(@ip, @port).post url, form: p
+    end
   end
 end

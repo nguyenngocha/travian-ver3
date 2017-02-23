@@ -1,7 +1,7 @@
 <h1>Proxy</h1>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for :proxy, url: proxies_path, method: :post do |f| %>
+    <%= form_for :prox, url: admin_proxies_path, method: :post do |f| %>
 
       <%= f.label :content %>
       <%= f.text_area :content, class: "form-control" %>
