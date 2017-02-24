@@ -49,6 +49,7 @@ class Upgrate::UpgrateService
 
   def upgrate village
     Time.zone = "Hanoi"
+
     upgrate_id = village.upgrate_schedules.first.upgrate_id
     url = "http://#{@account.server_id}/build.php?newdid=#{village.id}&id=#{upgrate_id}"
 
@@ -57,24 +58,26 @@ class Upgrate::UpgrateService
     @cookies[:lowRes] = 0
     @cookies[:sess_id] = @account.sess_id
     @troop_info = Hash.new
-    if @user.is_admin?
-      response = HTTP.cookies(@cookies).get url
-    else
-      response = HTTP.via(@user.ip, @user.port).cookies(@cookies).get url
-    end
-    @page = Nokogiri::HTML response.body.to_s
-    if @page.css("div#header ul#navigation").empty?
+
+    #send request get build
+    response = get_travian_request url
+    @page = Nokogiri::HTML response
+
+    if @page.css("div#header ul #navigation").empty?
       return false unless login()
-      response = HTTP.cookies(@cookies).get url
+      response = get_travian_request url
     end
 
-    response = Nokogiri::HTML response.body.to_s
+    response = Nokogiri::HTML response
     upgrate_button = response.css("#content #build button").first
-
-    if upgrate_button.attr("class").include? "green"
+    if upgrate_button.nil?
+      puts "công trình có id = #{upgrate_id} đã full không thể upgrate thêm nữa và đã bị xóa"
+      village.upgrate_schedules.first.destroy
+      return false
+    elsif upgrate_button.attr("class").include? "green"
       link = upgrate_button.attr("onclick").match(/'([^']+)'/)[1]
       link = "http://#{@account.server_id}/" + link
-      response = HTTP.cookies(@cookies).get link
+      response = get_travian_request link
       village.upgrate_schedules.first.destroy
       puts "success"
       return true
@@ -82,8 +85,17 @@ class Upgrate::UpgrateService
       puts "hết tài nguyên hoặc quá giới hạn công trình đang xây"
       return false
     else
-      puts "éo có lỗi gì đâu, có vào cho đủ case thôi"
+      puts "éo có lỗi gì đâu, cho vào cho đủ case thôi"
       return false
     end
+  end
+
+  def get_travian_request url
+    if @user.is_admin?
+      response = HTTP.cookies(@cookies).get url
+    else
+      response = HTTP.via(@user.ip, @user.port).cookies(@cookies).get url
+    end
+    response.body.to_s
   end
 end
