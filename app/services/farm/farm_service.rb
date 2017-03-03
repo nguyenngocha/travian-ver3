@@ -8,11 +8,11 @@ class Farm::FarmService
   end
 
   def perform
-    Time.zone = "Hanoi"
     puts "#{@account.username}-#{@farm_list.name}"
     if get_troop()
       puts "#{Time.zone.now}: get troop true"
       send_request1()
+
       if @respond_params.any?
         send_request2()
       end
@@ -32,6 +32,7 @@ class Farm::FarmService
       res = HTTP.via(@user.ip, @user.port).post url, form: {name: @account.username,
         password: @account.password, login: current_time}
     end
+
     @page = Nokogiri::HTML res.body.to_s
     if @page.css("div#header ul#navigation").empty?
       puts "Dang nhap lai va loi"
@@ -77,6 +78,11 @@ class Farm::FarmService
       @troop_info[:army9] >= army9 && @troop_info[:army10] >= army10 &&
       @troop_info[:army11] >= army11
 
+      if can_not_farm? farm.x, farm.y
+        puts "(#{farm.x}, #{farm.y}): can't farm"
+        return "next"
+      end
+
       @troop_info[:army1] -= army1
       @troop_info[:army2] -= army2
       @troop_info[:army3] -= army3
@@ -106,6 +112,8 @@ class Farm::FarmService
     else
       res = HTTP.via(@user.ip, @user.port).cookies(@cookies).get url
     end
+    sleep rand*0.2
+
     @page = Nokogiri::HTML res.body.to_s
     if @page.css("div#header ul#navigation").empty?
       return false unless login()
@@ -132,12 +140,19 @@ class Farm::FarmService
   end
 
   def send_request1
-    url = "http://#{@account.server_id}/build.php?id=39&gid=16&tt=2"
+    url = "http://#{@account.server_id}/build.php?newdid=#{@farm_list.village_id}&id=39&gid=16&tt=2"
     @respond_params = Array.new
+    count = 0
     @farm_list.farms.shuffle.each do |farm|
+      count += 1
+      puts count
+      return if count > 100
+
       form = Hash.new
       param = Hash.new
-      if farm.status && check_current_troop(farm)
+      checked_troop = check_current_troop(farm)
+      next if checked_troop == "next"
+      if farm.status && checked_troop == true
 
         form[:timestamp] = @troop_info[:timestamp]
         form[:timestamp_checksum] = @troop_info[:timestamp_checksum]
@@ -190,12 +205,14 @@ class Farm::FarmService
           puts "(#{param[:x]}|#{param[:y]})"
           @respond_params << param
         end
+      else
+        return
       end
     end
   end
 
   def send_request2
-    url = "http://#{@account.server_id}/build.php?id=39&gid=16&tt=2"
+    url = "http://#{@account.server_id}/build.php?newdid=#{@farm_list.village_id}&id=39&gid=16&tt=2"
     @respond_params.each do |param|
       if @user.is_admin?
         HTTP.cookies(@cookies).post url, form: param
@@ -203,7 +220,33 @@ class Farm::FarmService
         HTTP.via(@user.ip, @user.port).cookies(@cookies).post url, form: param
       end
     end
+    sleep rand*0.2
     Time.zone = "Hanoi"
     puts "#{Time.zone.now}: Gui #{@respond_params.size} dot"
+  end
+
+  def can_not_farm? x, y
+    url = "http://#{@account.server_id}/position_details.php?x=#{x}&y=#{y}"
+    puts url
+    begin
+      responses = HTTP.cookies(@cookies).get url
+      sleep rand*0.1
+    rescue
+    end
+
+    responses = Nokogiri::HTML responses.to_s
+    if responses.css(".instantTabs td img").present?
+      imgs = responses.css(".instantTabs td img").select {|img| img["class"].split[0] == "iReport"}
+
+      irp1 = imgs[0].attr("class").split.last if imgs[0]
+      irp2 = imgs[1].attr("class").split.last if imgs[1]
+      if irp1 == "iReport1" && irp2 == "iReport1"
+        return false
+      else
+        return true
+      end
+    else
+      return true
+    end
   end
 end

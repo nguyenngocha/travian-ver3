@@ -71,19 +71,18 @@ class Upgrate::UpgrateService
     response = Nokogiri::HTML response.body.to_s
     upgrate_button = response.css("#content #build button").first
 
-    if upgrate_button.attr("class").include? "green"
-      link = upgrate_button.attr("onclick").match(/'([^']+)'/)[1]
-      link = "http://#{@account.server_id}/" + link
-      response = HTTP.cookies(@cookies).get link
-      village.upgrate_schedules.first.destroy
-      puts "success"
-      return true
-    elsif upgrate_button.attr("class").include? "gold"
-      puts "hết tài nguyên hoặc quá giới hạn công trình đang xây"
-      return false
-    else
-      puts "éo có lỗi gì đâu, có vào cho đủ case thôi"
-      return false
+    if upgrate_button.present?
+      if upgrate_button.attr("class").include?("green")
+        link = upgrate_button.attr("onclick").match(/'([^']+)'/)[1]
+        link = "http://#{@account.server_id}/" + link
+        response = HTTP.cookies(@cookies).get link
+        village.upgrate_schedules.first.destroy
+        puts "success"
+        return true
+      elsif upgrate_button.attr("class").include? "gold"
+        puts "hết tài nguyên hoặc quá giới hạn công trình đang xây"
+        return false
+      end
     end
   end
 end
